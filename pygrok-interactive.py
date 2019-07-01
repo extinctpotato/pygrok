@@ -51,7 +51,7 @@ def main():
             print(prettyngrok(table))
 
         def do_ssh(self, inp):
-            if int(inp) < int(len(table)) and table[int(inp)]['type'] == 'tcp':
+            if isinstance(inp, int) and int(inp) < int(len(table)) and table[int(inp)]['type'] == 'tcp':
                 syntax = ['ssh', '-p', table[int(inp)]['port'], table[int(inp)]['dns']]
                 subprocess.call(syntax)
             else:
