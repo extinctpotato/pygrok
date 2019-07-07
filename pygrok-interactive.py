@@ -47,15 +47,25 @@ def main():
             cache(table)
 
         def do_ls(self, inp):
-            #global table
             print(prettyngrok(table))
 
+        def do_lsraw(self, inp):
+            print(table)
+            print(len(table))
+
         def do_ssh(self, inp):
-            if isinstance(inp, int) and int(inp) < int(len(table)) and table[int(inp)]['type'] == 'tcp':
+            if str.isdigit(inp) and int(inp) < int(len(table)) and table[int(inp)]['type'] == 'tcp':
                 syntax = ['ssh', '-p', table[int(inp)]['port'], table[int(inp)]['dns']]
                 subprocess.call(syntax)
             else:
                 print("Selected an HTTP server or out of range!")
+
+        def do_web(self, inp):
+            if str.isdigit(inp) and int(inp) < int(len(table)) and table[int(inp)]['type'] != 'tcp':
+                syntax = ['xdg-open', table[int(inp)]['type']+'://'+table[int(inp)]['dns']]
+                subprocess.call(syntax)
+            else:
+                print("Selected a TCP server or out of range!")
 
         def do_exit(self, inp):
             return True

@@ -49,7 +49,10 @@ def servertable(rawtext, servernum):
 
     server['type'] = rawtext[index].split(":")[0]
     server['dns'] = rawtext[index].split("//")[1].split(":")[0]
-    server['port'] = rawtext[index].split("//")[1].split(":")[1]
+    if server['type'] == 'tcp':
+        server['port'] = rawtext[index].split("//")[1].split(":")[1]
+    else:
+        server['port'] = ''
     server['ip'] = rawtext[index+1]
 
     return server
